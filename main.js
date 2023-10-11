@@ -2,17 +2,17 @@
 
 // En este ejercicio utilizaremos la API de https://jsonplaceholder.typicode.com/users. Leyendo su documentación, deberás hacer lo siguiente:
 
-// Imprimir por consola la lista (array) de usuarios.
+//Imprimir por consola la lista (array) de usuarios.
 
-// axios.get("https://jsonplaceholder.typicode.com/users")
+axios.get("https://jsonplaceholder.typicode.com/users")
 
-// .then((res) => console.log(res.data))
+.then((res) => console.log(res.data))
 
-// .catch((err) => console.error(err));
+.catch((err) => console.error(err));
 
-// Imprimir por consola solo el nombre de los usuarios.
+//Imprimir por consola solo el nombre de los usuarios.
 
-// .catch((err) => console.error(err));
+
 
 // Crear una variable global llamada "users" y, al hacer la solicitud utilizando Axios, rellenarla con la respuesta de la API(el array). Este proceso debe realizarse fuera de cualquier función.
 
@@ -26,6 +26,30 @@
 // Ahora en vez de mostrar los usuarios por consola muestra el nombre de cada uno en el DOM (en el HTML).
 // Recuerda que para estos ejercicios deberás utilizar Axios.
 
+
+let users = [];
+
+const list = document.getElementById ("list")
+function showUsers (){
+    axios.get("https://jsonplaceholder.typicode.com/users/")
+    .then((res) => {
+        users = res.data
+         console.log(users)
+    list.innerHTML = ""
+        users.forEach(element => {
+         (console.log(element.name))
+    list.innerHTML += `<li> ${element.name} </li>`
+    });
+})
+    .catch((err) => console.error(err));
+        return users;
+}
+
+const boton = document.getElementById('miBoton');
+
+boton.addEventListener('click', showUsers);
+
+   
 // Extras
 
 // 1. Quiero un perrito, pero no se que raza escoger, ¿me ayudas?
@@ -42,26 +66,7 @@
 
 // Extra ¿Y si ahora te pidiéramos que podamos poner otra raza en la url para que nos busque otras imágenes? Adapta las urls que ya tenías para que puedas pasarle argumentos.
 
-let users = [];
+axios.get ("https://dog.ceo/api/breeds/list/all");
 
-const contacts = document.getElementById ("contacts")
-function showUsers (){
-    axios.get("https://jsonplaceholder.typicode.com/users/")
-    .then((res) => {
-        users = res.data
-        console.log(users)
-    contacts.innerHTML = ""
-        users.forEach(element => {
-            // (console.log(element.name))
-            contacts.innerHTML += `${element.name}`
-        });
-        return users;
-    })
-}
 
-const boton = document.getElementById('miBoton');
-
-boton.addEventListener('click', showUsers);
-
-   
 
