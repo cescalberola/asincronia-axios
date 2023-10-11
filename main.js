@@ -26,28 +26,38 @@ axios.get("https://jsonplaceholder.typicode.com/users")
 // Ahora en vez de mostrar los usuarios por consola muestra el nombre de cada uno en el DOM (en el HTML).
 // Recuerda que para estos ejercicios deberás utilizar Axios.
 
-
 let users = [];
+    let listaOn = false;
 
-const list = document.getElementById ("list")
-function showUsers (){
-    axios.get("https://jsonplaceholder.typicode.com/users/")
-    .then((res) => {
-        users = res.data
-         console.log(users)
-    list.innerHTML = ""
-        users.forEach(element => {
-         (console.log(element.name))
-    list.innerHTML += `<li> ${element.name} </li>`
-    });
-})
-    .catch((err) => console.error(err));
-        return users;
-}
+    function showUsers() {
+      const list = document.getElementById("list");
+      const miBoton = document.getElementById("miBoton");
 
-const boton = document.getElementById('miBoton');
+      if (listaOn) {
+        list.style.display = "none";
+        miBoton.textContent = "Mostrar Usuarios";
+        listaOn = false;
+      } else {
+        axios
+          .get("https://jsonplaceholder.typicode.com/users")
+          .then((res) => {
+            users = res.data;
+            console.log(users);
+            list.innerHTML = ""
+            users.forEach((element) => {
+              console.log(element.name);
+              list.innerHTML += `<li>${element.name}</li>`;
+            });
+            list.style.display = "block";
+            miBoton.textContent = "Ocultar Usuarios";
+            listaOn = true;
+          })
+          .catch((err) => console.error(err));
+      }
+    }
 
-boton.addEventListener('click', showUsers);
+    const miBoton = document.getElementById("miBoton");
+    miBoton.addEventListener("click", showUsers);
 
    
 // Extras
@@ -66,7 +76,37 @@ boton.addEventListener('click', showUsers);
 
 // Extra ¿Y si ahora te pidiéramos que podamos poner otra raza en la url para que nos busque otras imágenes? Adapta las urls que ya tenías para que puedas pasarle argumentos.
 
-axios.get ("https://dog.ceo/api/breeds/list/all");
+let perretes = [];
+    let listaVisible = false;
 
+    function razasPerros() {
+      const doglist = document.getElementById("doglist");
+      const boton = document.getElementById("miDogBoton"); // Obtén la referencia del botón
 
+      if (listaVisible) {
+        // Si la lista está visible, la ocultamos y cambiamos el texto del botón
+        doglist.style.display = "none";
+        boton.textContent = "Mostrar Perretes";
+        listaVisible = false;
+      } else {
+        // Si la lista está oculta, la mostramos y cambiamos el texto del botón
+        axios.get("https://dog.ceo/api/breeds/list/all")
+          .then((res) => {
+            const dataPerretes = res.data.message;
+            perretes = Object.keys(dataPerretes);
 
+            perretes.forEach(res => {
+              doglist.innerHTML += `<li> ${res} </li>`;
+            })
+
+            doglist.style.display = "block";
+            boton.textContent = "Ocultar Perretes";
+            listaVisible = true;
+          })
+          .catch((err) => console.error(err));
+      }
+    }
+
+    const dogboton = document.getElementById('miDogBoton');
+    dogboton.addEventListener('click', razasPerros);
+  

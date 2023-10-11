@@ -3,17 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Asincronia-Axios</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    
     <h1>Asincronia - Axios</h1>
-
-    <button id="miBoton">showUsers</button>
-
-    <div id="contacts"></div>
-    <ul id="list"></ul>
     
+<main class="container">
+
+   <div class="box-showUsers">
+        <h2>ShowUsers</h2>
+        <button id="miBoton">Mostrar Usuarios</button>
+        <div id="contacts"></div>
+        <ul id="list" class="user-list"></ul>
+    </div> 
+        <div class="box-perretes">
+        <h2>Perretes</h2>
+        <button id="miDogBoton">Mostrar Perretes</button>
+        <div id="perretes"></div>
+        <ul id="doglist" class="user-list"></ul>
+    </div>
+</main>
 
     <script src="https://dog.ceo/dog-api/"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

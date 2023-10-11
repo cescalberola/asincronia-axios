@@ -1,0 +1,19 @@
+body {
+  text-align: center;
+}
+
+#doglist{
+  display: none;
+}
+ul{
+  list-style-type: none;
+}
+.container {
+  display: flex;
+  justify-content: space-between; /* Espacio entre los elementos */
+}
+
+.box-showUsers, .box-perretes {
+  width: 48%; /* Ancho de los elementos */
+  /* Estilos adicionales si es necesario */
+}
