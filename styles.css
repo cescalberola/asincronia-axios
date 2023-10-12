@@ -1,5 +1,9 @@
 body {
   text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
 }
 
 #doglist{
@@ -10,10 +14,58 @@ ul{
 }
 .container {
   display: flex;
-  justify-content: space-between; /* Espacio entre los elementos */
+  justify-content: space-between; 
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.box-showUsers, .box-perretes {
-  width: 48%; /* Ancho de los elementos */
-  /* Estilos adicionales si es necesario */
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+/* Estilos para la sección "ShowUsers" */
+.box-showUsers {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #333;
+}
+
+.user-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Estilos para la sección "Perretes" */
+.box-perretes {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+
+#miBoton {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#miBoton:hover {
+  background-color: #0056b3;
 }

@@ -66,47 +66,75 @@ let users = [];
 
 // En este ejercicio utilizaremos la API de https://dog.ceo/dog-api/. Leyendo su documentación, deberás hacer lo siguiente:
 
-// Imprimir por consola la lista de razas de todos los perros.
 
-// Imprimir por consola una imagen random de una raza.
 
-// Imprimir por consola todas las imágenes de una raza concreta.
 
-// Recuerda que para estos ejercicios deberás utilizar Axios. Al haber conseguido que se imprima por consola, el siguiente paso será que se muestren en pantalla con las herramientas que nos ofrece el árbol DOM.
+
 
 // Extra ¿Y si ahora te pidiéramos que podamos poner otra raza en la url para que nos busque otras imágenes? Adapta las urls que ya tenías para que puedas pasarle argumentos.
 
-let perretes = [];
-    let listaVisible = false;
+// Imprimir por consola la lista de razas de todos los perros.
 
-    function razasPerros() {
-      const doglist = document.getElementById("doglist");
-      const boton = document.getElementById("miDogBoton"); // Obtén la referencia del botón
-
-      if (listaVisible) {
-        // Si la lista está visible, la ocultamos y cambiamos el texto del botón
-        doglist.style.display = "none";
-        boton.textContent = "Mostrar Perretes";
-        listaVisible = false;
-      } else {
-        // Si la lista está oculta, la mostramos y cambiamos el texto del botón
-        axios.get("https://dog.ceo/api/breeds/list/all")
-          .then((res) => {
-            const dataPerretes = res.data.message;
-            perretes = Object.keys(dataPerretes);
-
-            perretes.forEach(res => {
-              doglist.innerHTML += `<li> ${res} </li>`;
-            })
-
-            doglist.style.display = "block";
-            boton.textContent = "Ocultar Perretes";
-            listaVisible = true;
-          })
-          .catch((err) => console.error(err));
-      }
-    }
-
-    const dogboton = document.getElementById('miDogBoton');
-    dogboton.addEventListener('click', razasPerros);
+axios.get('https://dog.ceo/api/breeds/list/all')
+.then(function (res) {
   
+  const breeds = Object.keys(res.data.message);
+  console.log('Lista de razas de perros:');
+  breeds.forEach(breed => {
+    console.log(breed);
+  });
+})
+.catch(function (error) {
+  console.error('Error al obtener la lista de razas de perros', error);
+});
+
+
+// Imprimir por consola una imagen random de una raza.
+
+const breedName = 'labrador';
+
+axios.get(`https://dog.ceo/api/breeds/image/random?breed=${breedName}`)
+.then(function (res) {
+  const randomImageURL = res.data.message;
+  console.log(`Imagen aleatoria de la raza ${breedName}:`);
+  console.log(randomImageURL);
+})
+.catch(function (error) {
+  console.error(`Error al obtener una imagen aleatoria de la raza ${breedName}`, error);
+});
+
+
+// Imprimir por consola todas las imágenes de una raza concreta.
+
+axios.get(`https://dog.ceo/api/breed/${breedName}/images`)
+.then(function (res) {
+  
+  const imageUrls = res.data.message;
+  
+  console.log(`Todas las imágenes de la raza ${breedName}:`);
+  imageUrls.forEach((imageUrl, index) => {
+    console.log(`${index + 1}: ${imageUrl}`);
+  });
+})
+.catch(function (error) {
+  console.error(`Error al obtener las imágenes de la raza ${breedName}`, error);
+});
+
+// Recuerda que para estos ejercicios deberás utilizar Axios. Al haber conseguido que se imprima por consola, el siguiente paso será que se muestren en pantalla con las herramientas que nos ofrece el árbol DOM.
+
+axios.get('https://dog.ceo/api/breeds/list/all')
+  .then(function (res) {
+    const imageUrls = res.data.message;
+
+    const container = document.getElementById("box-perretes");
+
+    imageUrls.forEach((imageUrl, index) => {
+      const img = document.createElement('img');
+      img.src = imageUrl;
+      img.alt = `${breedName} ${index + 1}`;
+      container.appendChild(img);
+    });
+  })
+  .catch(function (error) {
+    console.error(`Error al obtener las imágenes de la raza ${breedName}`, error);
+  });
