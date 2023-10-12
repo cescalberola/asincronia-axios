@@ -12,8 +12,6 @@ axios.get("https://jsonplaceholder.typicode.com/users")
 
 //Imprimir por consola solo el nombre de los usuarios.
 
-
-
 // Crear una variable global llamada "users" y, al hacer la solicitud utilizando Axios, rellenarla con la respuesta de la API(el array). Este proceso debe realizarse fuera de cualquier función.
 
 // Nota: Después de realizar el console.log de la variable "users", es normal que aparezca vacía debido a que JavaScript no es bloqueante y el console.log se ejecuta antes de que la variable sea llenada con la información de la solicitud.
@@ -27,114 +25,83 @@ axios.get("https://jsonplaceholder.typicode.com/users")
 // Recuerda que para estos ejercicios deberás utilizar Axios.
 
 let users = [];
-    let listaOn = false;
+let listaOn = false;
 
-    function showUsers() {
-      const list = document.getElementById("list");
-      const miBoton = document.getElementById("miBoton");
+function showUsers() {
+  const list = document.getElementById("list");
+  const miBoton = document.getElementById("miBoton");
 
-      if (listaOn) {
-        list.style.display = "none";
-        miBoton.textContent = "Mostrar Usuarios";
-        listaOn = false;
-      } else {
-        axios
-          .get("https://jsonplaceholder.typicode.com/users")
-          .then((res) => {
-            users = res.data;
-            console.log(users);
-            list.innerHTML = ""
-            users.forEach((element) => {
-              console.log(element.name);
-              list.innerHTML += `<li>${element.name}</li>`;
-            });
-            list.style.display = "block";
-            miBoton.textContent = "Ocultar Usuarios";
-            listaOn = true;
-          })
-          .catch((err) => console.error(err));
-      }
-    }
+  if (listaOn) {
+    list.style.display = "none";
+    miBoton.textContent = "Mostrar Usuarios";
+    listaOn = false;
+  } else {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((res) => {
+        users = res.data;
+        console.log(users);
+        list.innerHTML = ""
+        users.forEach((element) => {
+          console.log(element.name);
+          list.innerHTML += `<li>${element.name}</li>`;
+        });
+        list.style.display = "block";
+        miBoton.textContent = "Ocultar Usuarios";
+        listaOn = true;
+      })
+      .catch((err) => console.error(err));
+  }
+}
 
-    const miBoton = document.getElementById("miBoton");
-    miBoton.addEventListener("click", showUsers);
+const miBoton = document.getElementById("miBoton");
+miBoton.addEventListener("click", showUsers);
 
-   
 // Extras
 
 // 1. Quiero un perrito, pero no se que raza escoger, ¿me ayudas?
-
 // En este ejercicio utilizaremos la API de https://dog.ceo/dog-api/. Leyendo su documentación, deberás hacer lo siguiente:
-
-
-
-
-
-
 // Extra ¿Y si ahora te pidiéramos que podamos poner otra raza en la url para que nos busque otras imágenes? Adapta las urls que ya tenías para que puedas pasarle argumentos.
-
 // Imprimir por consola la lista de razas de todos los perros.
-
-axios.get('https://dog.ceo/api/breeds/list/all')
-.then(function (res) {
-  
-  const breeds = Object.keys(res.data.message);
-  console.log('Lista de razas de perros:');
-  breeds.forEach(breed => {
-    console.log(breed);
-  });
-})
-.catch(function (error) {
-  console.error('Error al obtener la lista de razas de perros', error);
-});
-
-
 // Imprimir por consola una imagen random de una raza.
-
-const breedName = 'labrador';
-
-axios.get(`https://dog.ceo/api/breeds/image/random?breed=${breedName}`)
-.then(function (res) {
-  const randomImageURL = res.data.message;
-  console.log(`Imagen aleatoria de la raza ${breedName}:`);
-  console.log(randomImageURL);
-})
-.catch(function (error) {
-  console.error(`Error al obtener una imagen aleatoria de la raza ${breedName}`, error);
-});
-
-
 // Imprimir por consola todas las imágenes de una raza concreta.
-
-axios.get(`https://dog.ceo/api/breed/${breedName}/images`)
-.then(function (res) {
-  
-  const imageUrls = res.data.message;
-  
-  console.log(`Todas las imágenes de la raza ${breedName}:`);
-  imageUrls.forEach((imageUrl, index) => {
-    console.log(`${index + 1}: ${imageUrl}`);
-  });
-})
-.catch(function (error) {
-  console.error(`Error al obtener las imágenes de la raza ${breedName}`, error);
-});
-
 // Recuerda que para estos ejercicios deberás utilizar Axios. Al haber conseguido que se imprima por consola, el siguiente paso será que se muestren en pantalla con las herramientas que nos ofrece el árbol DOM.
 
+
+// Obtener la lista de razas de perros
 axios.get('https://dog.ceo/api/breeds/list/all')
-  .then(function (res) {
-    const imageUrls = res.data.message;
-
-    const container = document.getElementById("box-perretes");
-
-    imageUrls.forEach((imageUrl, index) => {
-      const img = document.createElement('img');
-      img.src = imageUrl;
-      img.alt = `${breedName} ${index + 1}`;
-      container.appendChild(img);
-    });
+  .then(res => {
+    const breeds = res.data.message;
+    console.log('Lista de razas de perros:');
+    console.log(Object.keys(breeds));
   })
-  .catch(function (error) {
-    console.error(`Error al obtener las imágenes de la raza ${breedName}`, error);
+  .catch(error => {
+    console.error('Error al obtener la lista de razas:', error);
   });
+
+// Obtener una imagen aleatoria de una raza
+const randomBreed = 'bulldog'; // Cambia esto a la raza que desees
+axios.get(`https://dog.ceo/api/breed/${randomBreed}/images/random`)
+  .then(res => {
+    const randomImage = res.data.message;
+    console.log(`Imagen aleatoria de la raza ${randomBreed}:`);
+    console.log(randomImage);
+  })
+  .catch(error => {
+    console.error('Error al obtener la imagen aleatoria:', error);
+  });
+
+// Obtener todas las imágenes de una raza concreta
+
+const specificBreed = 'poodle'; // Cambia esto a la raza que desees
+
+axios.get(`https://dog.ceo/api/breed/${specificBreed}/images`)
+  .then(res => {
+    const breedImages = res.data.message;
+    console.log(`Todas las imágenes de la raza ${specificBreed}:`);
+    console.log(breedImages);
+  })
+  .catch(error => {
+    console.error('Error al obtener las imágenes de la raza:', error);
+  });
+
