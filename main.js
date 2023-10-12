@@ -32,7 +32,7 @@ function showUsers() {
   const miBoton = document.getElementById("miBoton");
 
   if (listaOn) {
-    list.style.display = "none";
+    list.innerHTML = ""
     miBoton.textContent = "Mostrar Usuarios";
     listaOn = false;
   } else {
@@ -46,7 +46,6 @@ function showUsers() {
           console.log(element.name);
           list.innerHTML += `<li>${element.name}</li>`;
         });
-        list.style.display = "block";
         miBoton.textContent = "Ocultar Usuarios";
         listaOn = true;
       })
@@ -66,9 +65,8 @@ miBoton.addEventListener("click", showUsers);
 // Imprimir por consola una imagen random de una raza.
 // Imprimir por consola todas las imágenes de una raza concreta.
 // Recuerda que para estos ejercicios deberás utilizar Axios. Al haber conseguido que se imprima por consola, el siguiente paso será que se muestren en pantalla con las herramientas que nos ofrece el árbol DOM.
-
-
 // Obtener la lista de razas de perros
+
 axios.get('https://dog.ceo/api/breeds/list/all')
   .then(res => {
     const breeds = res.data.message;
@@ -79,29 +77,44 @@ axios.get('https://dog.ceo/api/breeds/list/all')
     console.error('Error al obtener la lista de razas:', error);
   });
 
-// Obtener una imagen aleatoria de una raza
-const randomBreed = 'bulldog'; // Cambia esto a la raza que desees
+const randomBreed = 'bulldog';
+const perretes = document.getElementById('perretes');
+
 axios.get(`https://dog.ceo/api/breed/${randomBreed}/images/random`)
   .then(res => {
     const randomImage = res.data.message;
-    console.log(`Imagen aleatoria de la raza ${randomBreed}:`);
-    console.log(randomImage);
+    const imgElement = document.createElement('img');
+    imgElement.src = randomImage;
+    imgElement.alt = `Imagen de la raza ${randomBreed}`;
+    perretes.appendChild(imgElement);
   })
   .catch(error => {
     console.error('Error al obtener la imagen aleatoria:', error);
   });
 
-// Obtener todas las imágenes de una raza concreta
 
-const specificBreed = 'poodle'; // Cambia esto a la raza que desees
+function mostrarImagenAleatoriaDeRaza() {
+  const specificBreed = 'rottweiler'; //Cambiar de raza de perrete aquí!!
+  const perretes = document.getElementById('perretes');
 
-axios.get(`https://dog.ceo/api/breed/${specificBreed}/images`)
-  .then(res => {
-    const breedImages = res.data.message;
-    console.log(`Todas las imágenes de la raza ${specificBreed}:`);
-    console.log(breedImages);
-  })
-  .catch(error => {
-    console.error('Error al obtener las imágenes de la raza:', error);
-  });
+  axios.get(`https://dog.ceo/api/breed/${specificBreed}/images`)
+    .then(res => {
+      const breedImages = res.data.message;
+
+
+      const imagenAleatoriaIndex = Math.floor(Math.random() * breedImages.length);
+
+      const imgElement = document.createElement('img');
+      imgElement.src = breedImages[imagenAleatoriaIndex];
+      imgElement.alt = `Imagen de la raza ${specificBreed}`;
+      perretes.innerHTML = '';
+      perretes.appendChild(imgElement);
+    })
+    .catch(error => {
+      console.error('Error al obtener las imágenes de la raza:', error);
+    });
+}
+
+const actualizar = document.getElementById("actualizar");
+actualizar.addEventListener("click", mostrarImagenAleatoriaDeRaza);
 
