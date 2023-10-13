@@ -5,7 +5,7 @@
 ![GitHub stars](https://img.shields.io/github/stars/tu-usuario/tu-repositorio?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/tu-usuario/tu-repositorio?style=social)
 
-¡Bienvenido a tu proyecto de aprendizaje sobre asincronía y el uso de Axios! En este proyecto, aprenderás los conceptos básicos para interactuar con API utilizando JavaScript y Axios. Los principales objetivos de estos ejercicios son:
+En este proyecto, aprenderás los conceptos básicos para interactuar con API utilizando JavaScript y Axios. Los principales objetivos de estos ejercicios son:
 
 - Entender cómo funciona la asincronía.
 - Aprender cómo llamar a una API.
